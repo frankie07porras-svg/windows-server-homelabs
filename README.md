@@ -6,7 +6,7 @@ I’m documenting my progress learning Windows Server administration, networking
 
 ## Current Status
 
-My host computer runs Windows 11 Home (64-bit, x64) with 16 GB of RAM. Hardware virtualization is enabled. I’ve downloaded the Oracle VirtualBox installer, but haven’t confirmed installation yet. No virtual machines have been created.
+VirtualBox 7.2.20 has been installed and launches correctly. Hardware virtualization is turned on, and creating the virtual machines is the next stage.
 
 ## Planned Milestones
 
@@ -26,8 +26,7 @@ My host computer runs Windows 11 Home (64-bit, x64) with 16 GB of RAM. Hardware 
 | Host processor type | x64-based |
 | Host memory | 16 GB |
 | Hardware virtualization | Enabled, confirmed in Task Manager |
-| Virtualization software | Oracle VirtualBox installer downloaded; installation not yet confirmed |
-| Virtual machines | None created yet |
+| Virtualization software | Oracle VirtualBox 7.2.20 |
 
 ## Documentation Approach
 
