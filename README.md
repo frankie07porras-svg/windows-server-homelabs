@@ -113,3 +113,110 @@ Selecting UEFI VBOX CD-ROM in Boot Manager started the installer.
 #### Next Milestone
 
 Review and configure the Windows computer name, time zone, and network settings.
+
+## Progress Log – October 3, 2026
+
+### Milestone: Verify Server Identity and Configure Networking
+
+#### Steps Completed
+
+1. Verified that the Windows computer name is LAB-DC01.
+2. Checked the time zone and confirmed it is correct.
+3. Reviewed the VirtualBox NAT Network DHCP configuration.
+4. Changed the NatNetwork DHCP range to 10.0.2.100–10.0.2.254,
+   leaving addresses outside that range available for static configuration.
+5. Applied the following static IPv4 settings:
+   - IP address: 10.0.2.10
+   - Subnet mask: 255.255.255.0
+   - Default gateway: 10.0.2.1
+   - Temporary preferred DNS server: 192.168.1.254
+   - Alternate DNS server: None
+6. Ran ipconfig /all and verified the computer name, static address,
+   subnet mask, gateway, and DNS server.
+7. Confirmed DHCP is disabled on the server's Ethernet adapter.
+8. Verified browser access and Google search after applying the static IP.
+
+#### Result
+
+LAB-DC01 has a verified static IPv4 configuration outside the
+configured DHCP pool.
+
+The computer name and time zone were checked, and browser access
+worked after the network changes.
+
+Active Directory has not yet been installed or configured.
+The DNS client setting is temporary and will be updated when
+the server's Active Directory and DNS roles are configured.
+
+#### Troubleshooting Notes
+
+Before applying the static IP, DNS resolution and ping succeeded,
+but TCP port 443 tests to Microsoft and Google failed inside the VM.
+
+A TCP port 443 test to Google also failed on the host computer.
+Browser access worked on both the host and VM despite these failures.
+
+The cause of the TCP test failures remains unresolved.
+No firewall settings were changed.
+#### Troubleshooting Notes
+
+**Issue: TCP connection tests failed despite working browser access**
+
+1. Checked DNS resolution inside LAB-DC01.
+   A lookup for www.microsoft.com returned IP addresses.
+2. Tested connectivity using PowerShell.
+   Ping succeeded, but TCP port 443 tests returned
+   TcpTestSucceeded: False.
+3. Repeated a TCP port 443 test on the host computer.
+   It also failed, showing that the test failure was not
+   limited to the VM.
+4. Opened Google and performed a search on the host computer.
+   Search results loaded successfully.
+5. Repeated the browser test inside LAB-DC01.
+   Search results also loaded successfully.
+
+**Outcome:** Browser access worked on both computers despite the
+failed TCP tests. The cause of the TCP test failures was not
+determined. No firewall settings were changed.
+
+**Issue: Planned static IP overlapped the DHCP allocation range**
+
+1. Reviewed VirtualBox DHCP settings from PowerShell on the host:
+
+   & "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" list dhcpservers
+
+2. Found that NatNetwork assigned addresses from
+   10.0.2.3 through 10.0.2.254.
+   The planned server address, 10.0.2.10, was within this range.
+3. Changed the DHCP allocation range:
+
+   & "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe" dhcpserver modify --network=NatNetwork --lower-ip=10.0.2.100 --upper-ip=10.0.2.254
+
+4. Ran list dhcpservers again and confirmed that NatNetwork
+   now used 10.0.2.100–10.0.2.254.
+5. Left the separate host-only network's DHCP settings unchanged.
+
+**Outcome:** The planned server address was outside the updated
+DHCP pool. This addressed a potential allocation conflict;
+an actual duplicate-IP conflict was not observed.
+
+**Verification after applying the static IP**
+
+1. Configured LAB-DC01 with:
+   - IP address: 10.0.2.10
+   - Subnet mask: 255.255.255.0
+   - Default gateway: 10.0.2.1
+   - Temporary DNS server: 192.168.1.254
+2. Ran ipconfig /all inside the VM.
+3. Confirmed the computer name was LAB-DC01, DHCP was disabled,
+   and the configured IPv4 settings matched the intended values.
+4. Opened Google inside the VM and successfully performed a search.
+
+**Outcome:** The static configuration was applied, and browser
+access continued to work after the change. This did not establish
+that the earlier TCP test failures were resolved.
+
+#### Next Milestone
+
+Install Active Directory Domain Services and configure the first
+domain controller for the lab.
