@@ -6,13 +6,17 @@ I’m documenting my progress learning Windows Server administration, networking
 
 ## Current Status
 
-The LAB-DC01 virtual machine has been created in VirtualBox.
-It has 4 GB of RAM, 2 virtual CPUs, an 80 GB virtual disk,
-and EFI enabled. The Windows Server 2025 evaluation ISO is
-attached, and the network adapter is set to NAT.
+Windows Server 2025 Standard Evaluation (Desktop Experience) has been
+installed successfully on the LAB-DC01 virtual machine in VirtualBox.
 
-The VM is currently powered off. Windows Server installation
-is the next milestone.
+The VM has 4 GB of RAM, 2 virtual CPUs, an 80 GB virtual disk,
+EFI enabled, and a network adapter configured for NAT.
+
+Initial setup is complete. I signed in with the built-in Administrator
+account and confirmed that the desktop and Server Manager opened.
+
+The next milestone is to review and configure the Windows computer name,
+time zone, and network settings. Active Directory has not been configured.
 
 ## Planned Milestones
 
@@ -74,3 +78,38 @@ Booting and operating system installation have not been tested yet.
 
 #### Next Milestone
 Install Windows Server and verify that it starts successfully.
+
+
+## Progress Log — October 3, 2026
+
+### Milestone: Install Windows Server
+
+#### Steps Completed
+
+1. Started the LAB-DC01 virtual machine.
+2. Opened UEFI Boot Manager and selected UEFI VBOX CD-ROM to start the installer.
+3. Configured the installation language and keyboard settings.
+4. Selected Windows Server 2025 Standard Evaluation (Desktop Experience).
+5. Accepted the license terms.
+6. Selected the 80 GB unallocated virtual disk.
+7. Completed the Windows Server installation.
+8. Created a password for the built-in Administrator account.
+9. Signed in and confirmed that the desktop and Server Manager opened.
+
+#### Result
+
+Windows Server installed and booted successfully.
+Administrator sign-in and access to the graphical desktop were verified.
+
+Active Directory has not been configured.
+LAB-DC01 is the VirtualBox VM name; the Windows computer name still
+needs to be checked.
+
+#### Troubleshooting Notes
+
+The VM initially opened the UEFI firmware menu instead of Windows Setup.
+Selecting UEFI VBOX CD-ROM in Boot Manager started the installer.
+
+#### Next Milestone
+
+Review and configure the Windows computer name, time zone, and network settings.
